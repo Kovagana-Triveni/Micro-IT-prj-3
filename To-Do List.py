@@ -1,0 +1,70 @@
+# To-Do List Manager
+
+def display_menu():
+    print("\n--- To-Do List Menu ---")
+    print("1. Add Task")
+    print("2. View Tasks")
+    print("3. Mark Task as Completed")
+    print("4. Remove Task")
+    print("5. Exit")
+
+def add_task(tasks):
+    task_name = input("Enter the task: ")
+    tasks.append({'task': task_name, 'completed': False})
+    print("Task added successfully!")
+
+def view_tasks(tasks):
+    if not tasks:
+        print("No tasks found.")
+        return
+    print("\n--- Task List ---")
+    for i, task in enumerate(tasks, start=1):
+        status = "✔ Completed" if task['completed'] else "⏳ Pending"
+        print(f"{i}. {task['task']} [{status}]")
+
+def mark_task_completed(tasks):
+    view_tasks(tasks)
+    try:
+        task_num = int(input("Enter the task number to mark as completed: "))
+        if 1 <= task_num <= len(tasks):
+            tasks[task_num - 1]['completed'] = True
+            print("Task marked as completed.")
+        else:
+            print("Invalid task number.")
+    except ValueError:
+        print("Please enter a valid number.")
+
+def remove_task(tasks):
+    view_tasks(tasks)
+    try:
+        task_num = int(input("Enter the task number to remove: "))
+        if 1 <= task_num <= len(tasks):
+            removed = tasks.pop(task_num - 1)
+            print(f"Task '{removed['task']}' removed successfully.")
+        else:
+            print("Invalid task number.")
+    except ValueError:
+        print("Please enter a valid number.")
+
+def main():
+    tasks = []
+    while True:
+        display_menu()
+        choice = input("Enter your choice (1-5): ")
+        
+        if choice == '1':
+            add_task(tasks)
+        elif choice == '2':
+            view_tasks(tasks)
+        elif choice == '3':
+            mark_task_completed(tasks)
+        elif choice == '4':
+            remove_task(tasks)
+        elif choice == '5':
+            print("Exiting To-Do List Manager. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please enter a number between 1 and 5.")
+
+# Run the to-do list manager
+main()
